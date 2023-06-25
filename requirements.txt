@@ -1,0 +1,5 @@
+kafka==1.3.5
+kafka-python==2.0.2
+requests==2.27.1
+json5==0.9.6
+pyspark==3.4.1
