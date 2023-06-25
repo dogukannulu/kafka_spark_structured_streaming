@@ -29,7 +29,7 @@ def create_final_json(results: dict) -> dict:
     kafka_data["location"] = f"{results['location']['street']['number']}, {results['location']['street']['name']}"
     kafka_data["city"] = results['location']['city']
     kafka_data["country"] = results['location']['country']
-    kafka_data["postcode"] = results['location']['postcode']
+    kafka_data["postcode"] = int(results['location']['postcode'])
     kafka_data["latitude"] = float(results['location']['coordinates']['latitude'])
     kafka_data["longitude"] = float(results['location']['coordinates']['longitude'])
     kafka_data["email"] = results["email"]
@@ -59,6 +59,7 @@ def start_streaming():
 
         producer.send("random_names", json.dumps(kafka_data).encode('utf-8'))
         time.sleep(10)
+
 
 if __name__ == "__main__":
     start_streaming()
