@@ -13,7 +13,7 @@ default_args = {
     'retry_delay': timedelta(seconds=5)
 }
 
-with DAG('random_people_names', default_args=default_args, schedule_interval='*/10 * * * *', catchup=False) as dag:
+with DAG('random_people_names', default_args=default_args, schedule_interval='0 1 * * *', catchup=False) as dag:
 
 
     data_stream_task = PythonOperator(
