@@ -2,7 +2,7 @@ from datetime import timedelta
 from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime
-from get_api_data_send_to_kafka import main
+from stream_to_kafka import main
 
 start_date = datetime(2018, 12, 21, 12, 12)
 
