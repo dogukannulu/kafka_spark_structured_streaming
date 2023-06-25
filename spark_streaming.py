@@ -1,7 +1,6 @@
 from pyspark.sql import SparkSession
 from pyspark.sql.types import StructType,StructField,FloatType,IntegerType,StringType
-from pyspark.sql.streaming import DataStreamReader
-from pyspark.sql.functions import *
+from pyspark.sql.functions import from_json,col
 
 schema = StructType([
                 StructField("full_name",StringType(),False),
@@ -15,23 +14,47 @@ schema = StructType([
                 StructField("email",FloatType(),False)
             ])
 
-# Create a SparkSession
-spark = SparkSession.builder \
-    .appName("MyApp") \
-    .config("spark.cassandra.connection.host", "cassandra") \
+spark = SparkSession \
+    .builder \
+    .appName("SparkStructuredStreaming") \
+    .config("spark.jars.packages", "com.datastax.spark:spark-cassandra-connector_2.12:3.0.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0") \
+    .config("spark.cassandra.connection.host", "localhost") \
+    .config("spark.cassandra.connection.port","9042")\
     .config("spark.cassandra.auth.username", "cassandra") \
     .config("spark.cassandra.auth.password", "cassandra") \
-    .config("spark.kafka.bootstrap.servers", "kafka1:19092,kafka2:19093,kafka3:19094") \
     .getOrCreate()
+  
+spark.sparkContext.setLogLevel("ERROR")
 
 df = spark \
   .readStream \
   .format("kafka") \
   .option("kafka.bootstrap.servers", "kafka1:19092,kafka2:19093,kafka3:19094") \
-  .option("subscribe", "rosmsgs") \
+  .option("subscribe", "random_names") \
   .option("delimeter",",") \
   .option("startingOffsets", "earliest") \
-  .load() 
+  .load()
+
+df1 = df.selectExpr("CAST(value AS STRING)").select(from_json(col("value"),schema).alias("data")).select("data.*")
 
 
-spark.stop()
+def write_to_cassandra(writeDF, _):
+  writeDF.write \
+    .format("org.apache.spark.sql.cassandra")\
+    .mode('append')\
+    .options(table="random_names", keyspace="spark_streaming")\
+    .save()
+
+df1.writeStream \
+    .foreachBatch(write_to_cassandra) \
+    .outputMode("append") \
+    .start()\
+    .awaitTermination()
+
+my_query = (df1.writeStream
+                  .format("org.apache.spark.sql.cassandra")
+                  .outputMode("append")
+                  .options(table="random_names", keyspace="spark_streaming")\
+                  .start())
+
+my_query.awaitTermination()
