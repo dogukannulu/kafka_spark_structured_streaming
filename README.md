@@ -1,5 +1,6 @@
 # Information
-![image](https://github.com/dogukannulu/kafka_spark_structured_streaming/assets/91257958/cce4c4fc-5280-45e1-8213-38345289670e)
+![image](https://github.com/dogukannulu/kafka_spark_structured_streaming/assets/91257958/b0635bd9-ab1c-4238-8c98-e9ad05143295)
+
 
 
 
