@@ -30,6 +30,7 @@ def create_spark_session():
 
     return spark
 
+
 def create_initial_dataframe(spark_session):
     """
     Reads the streaming data and creates the initial dataframe accordingly.
@@ -52,6 +53,9 @@ def create_initial_dataframe(spark_session):
 
 
 def create_final_dataframe(df, spark_session):
+    """
+    Modifies the initial dataframe, and creates the final dataframe.
+    """
     schema = StructType([
                 StructField("full_name",StringType(),False),
                 StructField("gender",StringType(),False),
@@ -68,9 +72,10 @@ def create_final_dataframe(df, spark_session):
 
     return df
 
+
 def start_streaming(df):
     """
-    Starts the streaming to index office_input in elasticsearch.
+    Starts the streaming to table spark_streaming.random_names in cassandra
     """
     logging.info("Streaming is being started...")
     my_query = (df.writeStream
@@ -80,6 +85,13 @@ def start_streaming(df):
                   .start())
 
     return my_query.awaitTermination()
+
+
+def write_streaming_data():
+    spark = create_spark_session()
+    df = create_initial_dataframe(spark)
+    df_final = create_final_dataframe(df, spark)
+    start_streaming(df_final)
 
 
 if __name__ == '__main__':
