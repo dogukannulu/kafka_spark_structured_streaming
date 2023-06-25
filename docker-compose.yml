@@ -124,37 +124,6 @@ services:
       - kafka-network
       - airflow-kafka
 
-  db:
-    image: mysql:8.0
-    container_name: mysql-1
-    restart: always
-    environment:
-      MYSQL_DATABASE: mysql
-      MYSQL_USER: mysql
-      MYSQL_PASSWORD: mysql
-      MYSQL_ROOT_PASSWORD: mysql
-    ports:
-      - '3306:3306'
-    volumes:
-      - mysql-data:/var/lib/mysql
-    networks:
-      - airflow-kafka
-
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: phpmyadmin
-    links:
-      - db
-    environment:
-      PMA_HOST: db
-      PMA_PORT: 3306
-      PMA_ARBITRARY: 1
-    restart: always
-    ports:
-      - 8185:80
-    networks:
-      - airflow-kafka
-  
   spark:
     image: bitnami/spark:3
     container_name: spark_master
