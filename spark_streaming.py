@@ -18,7 +18,7 @@ def create_spark_session():
                 .builder \
                 .appName("SparkStructuredStreaming") \
                 .config("spark.jars.packages", "com.datastax.spark:spark-cassandra-connector_2.12:3.0.0,org.apache.spark:spark-sql-kafka-0-10_2.12:3.0.0") \
-                .config("spark.cassandra.connection.host", "localhost") \
+                .config("spark.cassandra.connection.host", "cassandra") \
                 .config("spark.cassandra.connection.port","9042")\
                 .config("spark.cassandra.auth.username", "cassandra") \
                 .config("spark.cassandra.auth.password", "cassandra") \
@@ -65,11 +65,11 @@ def create_final_dataframe(df, spark_session):
                 StructField("postcode",IntegerType(),False),
                 StructField("latitude",FloatType(),False),
                 StructField("longitude",FloatType(),False),
-                StructField("email",FloatType(),False)
+                StructField("email",StringType(),False)
             ])
 
     df = df.selectExpr("CAST(value AS STRING)").select(from_json(col("value"),schema).alias("data")).select("data.*")
-
+    print(df)
     return df
 
 
@@ -99,4 +99,3 @@ if __name__ == '__main__':
     df = create_initial_dataframe(spark)
     df_final = create_final_dataframe(df, spark)
     start_streaming(df_final)
-
