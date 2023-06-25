@@ -4,6 +4,7 @@ Gets the random user API data and writes the data to a Kafka topic every 10 seco
 import requests
 import json
 import time
+import pandas as pd
 from kafka import KafkaProducer
 
 
@@ -43,6 +44,7 @@ def create_kafka_producer():
     """
 
     return KafkaProducer(bootstrap_servers=['kafka1:19092', 'kafka2:19093', 'kafka3:19094'])
+
 
 def start_streaming():
     """
