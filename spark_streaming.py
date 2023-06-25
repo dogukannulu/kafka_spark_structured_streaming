@@ -95,7 +95,4 @@ def write_streaming_data():
 
 
 if __name__ == '__main__':
-    spark = create_spark_session()
-    df = create_initial_dataframe(spark)
-    df_final = create_final_dataframe(df, spark)
-    start_streaming(df_final)
+    write_streaming_data()
