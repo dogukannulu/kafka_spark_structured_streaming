@@ -3,7 +3,6 @@ from airflow import DAG
 from airflow.operators.python_operator import PythonOperator
 from datetime import datetime
 from stream_to_kafka import start_streaming
-from spark_streaming import write_streaming_data
 
 start_date = datetime(2018, 12, 21, 12, 12)
 
@@ -23,11 +22,4 @@ with DAG('random_people_names', default_args=default_args, schedule_interval='0 
     dag=dag,
     )
 
-    write_streaming_data_task = PythonOperator(
-    task_id='write_streaming_data',
-    python_callable=write_streaming_data,
-    dag=dag,
-    )
-
     data_stream_task
-    write_streaming_data_task
