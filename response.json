@@ -1,0 +1,66 @@
+{
+    "results": [
+        {
+            "gender": "female",
+            "name": {
+                "title": "Mrs",
+                "first": "Antonida",
+                "last": "Kaminska"
+            },
+            "location": {
+                "street": {
+                    "number": 7812,
+                    "name": "Provulok Pushkina"
+                },
+                "city": "Chistyakove",
+                "state": "Ternopilska",
+                "country": "Ukraine",
+                "postcode": 68140,
+                "coordinates": {
+                    "latitude": "77.9446",
+                    "longitude": "154.7317"
+                },
+                "timezone": {
+                    "offset": "+1:00",
+                    "description": "Brussels, Copenhagen, Madrid, Paris"
+                }
+            },
+            "email": "antonida.kaminska@example.com",
+            "login": {
+                "uuid": "1577ccfc-a3c6-49d0-bb86-ddca8faf0d11",
+                "username": "happyswan852",
+                "password": "kathy",
+                "salt": "oXzL1cSS",
+                "md5": "801aef5988f82af79e9d3945893e21ad",
+                "sha1": "90880d9a24ce0981c202b2b973edafea910f0899",
+                "sha256": "2738615385aefd1c004195b8e7a9c9548c6876f919840069b10f6c3567a79788"
+            },
+            "dob": {
+                "date": "1990-04-17T04:05:46.280Z",
+                "age": 33
+            },
+            "registered": {
+                "date": "2015-05-24T00:39:35.317Z",
+                "age": 8
+            },
+            "phone": "(099) R90-8000",
+            "cell": "(099) X16-6755",
+            "id": {
+                "name": "",
+                "value": null
+            },
+            "picture": {
+                "large": "https://randomuser.me/api/portraits/women/51.jpg",
+                "medium": "https://randomuser.me/api/portraits/med/women/51.jpg",
+                "thumbnail": "https://randomuser.me/api/portraits/thumb/women/51.jpg"
+            },
+            "nat": "UA"
+        }
+    ],
+    "info": {
+        "seed": "4b371ec2f2f42f0b",
+        "results": 1,
+        "page": 1,
+        "version": "1.4"
+    }
+}
