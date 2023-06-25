@@ -160,7 +160,6 @@ services:
       - kafka-network
 
 volumes:
-  mysql-data:
   cassandra-data:
   spark-data:
 
