@@ -42,4 +42,4 @@ services:
 
 networks:
   airflow-kafka:
-    driver: bridge
+    external: true
